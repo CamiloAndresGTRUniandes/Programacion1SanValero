@@ -28,6 +28,35 @@ public class Main {
         tablero[filaAleatorio][columnaAleatorio] = 'B';
 
         imprimirTablero();
+
+        //Repartir 10 Homer en el tablero
+        for (int i = 0; i < 10; i++){
+            int filaAleatorioHomer = aleatorio.nextInt(MAX_FILA_TABLERO);
+            int columnaAleatorioHomer = aleatorio.nextInt(MAX_COLUMNA_TABLERO);
+            char valor = tablero[filaAleatorioHomer][columnaAleatorioHomer];
+            if (valor == 'L')
+            {
+                tablero[filaAleatorioHomer][columnaAleatorioHomer] = 'H';
+            }
+        }
+        imprimirTablero();
+
+        //Imprimir Muro
+        for (int i = 0; i < 10; i++){
+            int filaAleatorioMuro = aleatorio.nextInt(MAX_FILA_TABLERO);
+            int columnaAleatorioMuro = aleatorio.nextInt(MAX_COLUMNA_TABLERO);
+            char valor = tablero[filaAleatorioMuro][columnaAleatorioMuro];
+            if (valor == 'L')
+            {
+                tablero[filaAleatorioMuro][columnaAleatorioMuro] = 'M';
+            }
+        }
+        imprimirTablero();
+
+        //Asignar final
+        tablero[MAX_FILA_TABLERO -1][MAX_COLUMNA_TABLERO -1] = 'F';
+        imprimirTablero();
+
     }
     private static void imprimirTablero(){
         for (int i = 0; i < MAX_FILA_TABLERO; i++){
