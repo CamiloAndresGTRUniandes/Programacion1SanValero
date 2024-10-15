@@ -8,28 +8,30 @@ public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     private static final int MAX_FILA_TABLERO = 10;
     private static final int MAX_COLUMNA_TABLERO = 10;
-    private static int MAX_VIDAS = 3;
+    //Máximo de vidas disponibles
+    private static int MAX_VIDAS = 5;
     public static char [][] tablero;
     private static int[] posicionBart = new int[2];
+    private static boolean continuar = true;
     public static void main(String[] args) {
         //InicializarTablero
         inicializarTablero();
-        while (true){
-            if (MAX_VIDAS == 0) {
-                System.out.println("Game Over!");
-                break;
-            }
-            System.out.println("Use W (arriba), A (izquierda), S (abajo), D (derecha) para mover a Bart. Digite 'S' para terminar.");
-            char movimiento = scanner.nextLine().toUpperCase().charAt(0);
-            if (movimiento == 'S') {
-                break;
-            }
 
+        //Crear un menú para la interacción del jugador
+        while (continuar){
+            if (MAX_VIDAS == 0) {
+                generarMensaje(3);
+                break;
+            }
+            generarMensaje(7);
+            char movimiento = scanner.nextLine().toUpperCase().charAt(0);
+            if (movimiento == 'E') {
+                break;
+            }
+            //Mover a Bart según la letra ingresada
             moverBart(movimiento);
             imprimirTablero();
         }
-
-
     }
     private static void inicializarTablero(){
         //Inicializar la matriz del tablero
@@ -41,19 +43,18 @@ public class Main {
                 tablero[i][j] = 'L';
             }
         }
-
-        //Asignar a Bart a posición inicial
-        asignarBart();
-
-        //Repartir 10 Homer en el tablero
-        generarHomer();
-
-        //Imprimir Muro
-        generarMuro();
-
-
         //Asignar final
         tablero[MAX_FILA_TABLERO -1][MAX_COLUMNA_TABLERO -1] = 'F';
+
+        //Asignar a Bart a posición inicial
+        asignarPersonajeACasillaLibre('B', 1);
+
+        //Repartir 10 Homer en el tablero
+        asignarPersonajeACasillaLibre('H', 10);
+
+        //Generar Muro
+        asignarPersonajeACasillaLibre('M', 10);
+
         imprimirTablero();
     }
     private static void imprimirTablero(){
@@ -68,34 +69,21 @@ public class Main {
         System.out.println(" ");
         System.out.println(" ");
     }
-    private static void generarHomer(){
-        for (int i = 0; i < 10; i++){
-            int filaAleatorioHomer = aleatorio.nextInt(MAX_FILA_TABLERO);
-            int columnaAleatorioHomer = aleatorio.nextInt(MAX_COLUMNA_TABLERO);
-            char valor = tablero[filaAleatorioHomer][columnaAleatorioHomer];
-            if (valor == 'L')
-            {
-                tablero[filaAleatorioHomer][columnaAleatorioHomer] = 'H';
-            }
-        }
-    }
 
-    private static void asignarBart(){
-        int filaAleatorio = aleatorio.nextInt(MAX_FILA_TABLERO);
-        int columnaAleatorio = aleatorio.nextInt(MAX_COLUMNA_TABLERO);
-        tablero[filaAleatorio][columnaAleatorio] = 'B';
-        posicionBart[0] = filaAleatorio;
-        posicionBart[1] = columnaAleatorio;
-    }
-    private static void generarMuro(){
-        for (int i = 0; i < 10; i++){
-            int filaAleatorioMuro = aleatorio.nextInt(MAX_FILA_TABLERO);
-            int columnaAleatorioMuro = aleatorio.nextInt(MAX_COLUMNA_TABLERO);
-            char valor = tablero[filaAleatorioMuro][columnaAleatorioMuro];
+    private static void asignarPersonajeACasillaLibre(char personaje, int cantidad){
+        for (int i = 0; i < cantidad; i++){
+            int filaAleatorio = aleatorio.nextInt(MAX_FILA_TABLERO);
+            int columnaAleatorio = aleatorio.nextInt(MAX_COLUMNA_TABLERO);
+            char valor = tablero[filaAleatorio][columnaAleatorio];
             if (valor == 'L')
             {
-                tablero[filaAleatorioMuro][columnaAleatorioMuro] = 'M';
+                tablero[filaAleatorio][columnaAleatorio] = personaje;
             }
+            if (personaje == 'B') {
+                posicionBart[0] = filaAleatorio;
+                posicionBart[1] = columnaAleatorio;
+            }
+
         }
     }
 
@@ -107,24 +95,119 @@ public class Main {
         switch (movimiento){
             case 'D':
                 if (columna < MAX_COLUMNA_TABLERO - 1) {
+                    if (tablero[fila][columna+1] == 'F') {
+                        generarMensaje(4);
+                        continuar = false;
+                        break;
+                    }
                     if (tablero[fila][columna+1] == 'H') {
-                        System.out.println("Te has chocado con Homer");
-                        MAX_VIDAS --;
+                        generarMensaje(1);
                         break;
                     } else if (tablero[fila][columna+1] == 'M') {
-                        System.out.println("Te has chocado con un muro, movimiento inválido");
+                        generarMensaje(2);
                         break;
                     }
                     columna++;
                 }else{
-                    System.out.println("Fuera del limite");
+                    generarMensaje(5);
+                    break;
                 }
+                break;
+            case 'A':
+                if (columna - 1 >= 0) {
+                    if (tablero[fila][columna-1] == 'H') {
+                        generarMensaje(1);
+                        break;
+                    } else if (tablero[fila][columna-1] == 'M') {
+                        generarMensaje(2);
+                        break;
+                    }
+                    columna--;
+                }else{
+                    generarMensaje(5);
+                    break;
+                }
+                break;
+            case 'W':
+                if (fila -1 >= 0) {
+                    if (tablero[fila - 1][columna] == 'H') {
+                        generarMensaje(1);
+                        break;
+                    } else if (tablero[fila - 1][columna] == 'M') {
+                        generarMensaje(2);
+                        break;
+                    }
+                    fila--;
+                }else{
+                    generarMensaje(5);
+                    break;
+                }
+                break;
+            case 'S':
+                if (fila < MAX_FILA_TABLERO - 1) {
+                    if (tablero[fila + 1][columna] == 'F') {
+                        generarMensaje(4);
+                        continuar = false;
+                    }
+                    if (tablero[fila + 1][columna] == 'H') {
+                        generarMensaje(1);
+                        break;
+                    } else if (tablero[fila + 1][columna] == 'M') {
+                        generarMensaje(2);
+                        break;
+                    }
+                    fila++;
+                }else{
+                    generarMensaje(5);
+                    break;
+                }
+                break;
             default:
-                System.out.println("Movimiento no válido. Usa W, A, S, D.");
+                generarMensaje(6);
                 break;
         }
         posicionBart[0] = fila;
         posicionBart[1] = columna;
         tablero[fila][columna] = 'B';
+    }
+
+    //Procedimiento para la impresión de mensajes al jugador y disminuir vidas
+    private static void generarMensaje(int mensaje){
+        /*
+        1. Choque con Homer
+        2. Choque con muro
+        3. Game Over
+        4. Ganador
+        5. Fuera del limite
+        6. Movimiento invalido
+        7. Inicial
+        * */
+        switch (mensaje){
+
+            case 1:
+                MAX_VIDAS --;
+                System.out.println("Te has chocado con Homer, pierdes una vida, te quedan: " + MAX_VIDAS);
+                break;
+            case 2:
+                System.out.println("Te has chocado con un muro, movimiento inválido");
+                break;
+            case 3:
+                System.out.println("Game Over!");
+                break;
+            case 4:
+                System.out.println("Has ganado!!!");
+                break;
+            case 5:
+                System.out.println("Fuera del limite, movimiento invalido");
+                break;
+            case 6:
+                System.out.println("Movimiento no válido. Usa W, A, S, D. Para mover a Bart");
+                break;
+            case 7:
+                System.out.println("Use W (arriba), A (izquierda), S (abajo), D (derecha) para desplazar a Bart. Digite 'E' para terminar.");
+                break;
+            default:
+                System.out.println("Código de mensaje invalido, contacte al desarrollador!");
+        }
     }
 }
