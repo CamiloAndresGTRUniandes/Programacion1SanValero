@@ -20,7 +20,6 @@ public class Main {
     private static String[][] tableroX = new String[MAX_FILAS][MAX_COLUMNAS];
     private static final String nombreTableroEnteros = "tableroEnteros";
     private static final String nombreTableroX = "tableroX";
-    private static boolean encontrado = false;
     private static int aciertos = 0;
 
     public static void main(String[] args) {
@@ -89,7 +88,6 @@ public class Main {
                 if (tableroEnteros[i][j] == numeroABuscar) {
                     tableroX[i][j] = numeroABuscar + "";
                     aciertos++;
-                    encontrado = true;
                     encontradoIteracion = true;
                 }
             }
