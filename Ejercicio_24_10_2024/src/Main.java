@@ -83,15 +83,17 @@ public class Main {
 
     //Buscar el número y reemplazarlo en la matriz de X
     private static boolean buscarNumero(int numeroABuscar){
+        boolean encontradoIteracion = false;
         for (int i = 0; i < MAX_FILAS; i++) {
             for (int j = 0; j < MAX_COLUMNAS; j++) {
                 if (tableroEnteros[i][j] == numeroABuscar) {
                     tableroX[i][j] = numeroABuscar + "";
                     aciertos++;
                     encontrado = true;
+                    encontradoIteracion = true;
                 }
             }
         }
-        return encontrado;
+        return encontradoIteracion;
     }
 }
