@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Bingo/Bingo.iml" filepath="$PROJECT_DIR$/Bingo/Bingo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Simpson/EjSimpsonProgFuncional/EjSimpsonProgFuncional.iml" filepath="$PROJECT_DIR$/Simpson/EjSimpsonProgFuncional/EjSimpsonProgFuncional.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Ejercicio_24_10_2024/Ejercicio_24_10_2024.iml" filepath="$PROJECT_DIR$/Ejercicio_24_10_2024/Ejercicio_24_10_2024.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Ejercicio_Altura_Piramide/Ejercicio_Altura_Piramide/Ejercicio_Altura_Piramide.iml" filepath="$PROJECT_DIR$/Ejercicio_Altura_Piramide/Ejercicio_Altura_Piramide/Ejercicio_Altura_Piramide.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Memorize/Memorize.iml" filepath="$PROJECT_DIR$/Memorize/Memorize.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Programacion1SanValero.iml" filepath="$PROJECT_DIR$/.idea/Programacion1SanValero.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Simpson/SimpsonProgFuncionalJava/SimpsonProgFuncionalJava.iml" filepath="$PROJECT_DIR$/Simpson/SimpsonProgFuncionalJava/SimpsonProgFuncionalJava.iml" />
+    </modules>
+  </component>
+</project>
